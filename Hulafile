@@ -1,0 +1,24 @@
+name 'libc'
+license 'MIT'
+
+build_dep 'gcc-stage1'
+
+# Get rid of any mentions to the sysroot which don't exist yet
+unsetenv 'CFLAGS'
+unsetenv 'CXXFLAGS'
+unsetenv 'CPPFLAGS'
+unsetenv 'LDFLAGS'
+
+setenv 'CROSS_COMPILE', "#{host_platform.triple}-"
+
+configure do
+  cmd './configure', "--prefix=/", "--host=#{host_platform.triple}"
+end
+
+build do
+  make
+end
+
+install do
+  make "install", "DESTDIR=#{dstroot}"
+end
