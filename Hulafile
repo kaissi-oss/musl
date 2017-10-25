@@ -1,7 +1,8 @@
 name 'glibc'
 license 'MIT'
 
-build_dep 'gcc-stage1'
+build_dep 'gcc-stage1', target: target_config
+build_dep 'linux', host: target_config, target: target_config
 
 # Get rid of any mentions to the sysroot which don't exist yet
 unsetenv 'CFLAGS'
